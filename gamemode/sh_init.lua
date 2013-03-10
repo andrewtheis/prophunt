@@ -1,37 +1,37 @@
-/*
- * Updated by Andrew Theis on 5/16/2010.
- * Copyright 2010 Andrew Theis. All rights reserved.
- * 
- * This file contains all settings and functions that are shared between the client and server.
- */
+--
+-- Updated by Andrew Theis on 2013-03-09.
+-- Copyright (c) 2010-2013 Andrew Theis. All rights reserved.
+-- 
+-- This file contains all settings and functions that are shared between the client and server.
+--
 
 
-// Include the required lua files.
+-- Include the required lua files.
 include("sh_config.lua")
 include("sh_player.lua")
 
 
-// Include the configuration for this map.
-if file.Exists("../gamemodes/prop_hunt/gamemode/maps/"..game.GetMap()..".lua") || file.Exists("../lua_temp/prop_hunt/gamemode/maps/"..game.GetMap()..".lua") then
+-- Include the configuration for this map.
+if file.Exists("../gamemodes/prop_hunt/gamemode/maps/"..game.GetMap()..".lua", "LUA") || file.Exists("../lua_temp/prop_hunt/gamemode/maps/"..game.GetMap()..".lua", "LUA") then
 
 	include("maps/"..game.GetMap()..".lua")
 	
 end
 
 
-// Fretta!
-DeriveGamemode("fretta")
-IncludePlayerClasses()
+-- Player classes
+include("player_class/player_hunter.lua")
+include("player_class/player_prop.lua")
 
 
-// Information about the gamemode.
+-- Information about the gamemode.
 GM.Name		= "Prop Hunt"
-GM.Author	= "AMT"
+GM.Author	= "Andrew Theis"
 GM.Email	= "theis.andrew@gmail.com"
-GM.Website	= "http://www.amtstudios.com/mods/prop-hunt.php"
+GM.Website	= "http://www.github.com/andrewtheis/prop-hunt"
 
 
-// Help info.
+-- Help info.
 GM.Help = [[Prop Hunt is a twist on the classic backyard game Hide and Seek.
 
 As a Prop you have ]]..HUNTER_BLINDLOCK_TIME..[[ seconds to replicate an existing prop on the map and then find a good hiding spot. Press [E] to replicate the prop you are looking at. Your health is scaled based on the size of the prop you replicate.
@@ -41,7 +41,7 @@ As a Hunter you will be blindfolded for the first ]]..HUNTER_BLINDLOCK_TIME..[[ 
 Both teams can press [F3] to play a taunt sound.]]
 
 
-// Fretta configuration.
+-- Fretta configuration.
 GM.AutomaticTeamBalance		= true
 GM.AddFragsToTeamScore		= true
 GM.CanOnlySpectateOwnTeam 	= true
@@ -60,7 +60,7 @@ GM.SuicideString			= "couldn't take the pressure and committed suicide."
 GM.TeamBased 				= true
 
 
-// Called on gamemdoe initialization to create teams.
+-- Called on gamemdoe initialization to create teams.
 function GM:CreateTeams()
 
 	if !GAMEMODE.TeamBased then

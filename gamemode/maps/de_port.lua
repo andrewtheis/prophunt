@@ -1,9 +1,9 @@
-/*
- * Updated by Andrew Theis on 5/16/2010.
- * Copyright 2010 Andrew Theis. All rights reserved.
- * 
- * Props underwater should die on this level.
- */
+--
+-- Updated by Andrew Theis on 2013-03-09.
+-- Copyright (c) 2010-2013 Andrew Theis. All rights reserved.
+-- 
+-- Props underwater should die on this level.
+-- 
 
 
 if SERVER then

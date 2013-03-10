@@ -1,22 +1,22 @@
-/*
- * Updated by Andrew Theis on 5/16/2010.
- * Copyright 2010 Andrew Theis. All rights reserved.
- * 
- * Handles client (view, hud, etc).
- */
+--
+-- Updated by Andrew Theis on 2013-03-09.
+-- Copyright (c) 	2010-2013 Andrew Theis. All rights reserved.
+-- 
+-- Handles client (view, hud, etc).
+--
  
 
-// Include the needed files.
+-- Include the needed files.
 include("sh_init.lua")
 
 
-// Decides where the player view should be.
+-- Decides where the player view should be.
 function GM:CalcView(pl, origin, angles, fov)
 	
-	// Create empty array to store view information in.
+	-- Create empty array to store view information in.
 	local view = {} 
 	
-	// If the player is supposed blind, set their view off the map.
+	-- If the player is supposed blind, set their view off the map.
 	if blind then
 	
 		view.origin = Vector(20000, 0, 0)
@@ -27,24 +27,24 @@ function GM:CalcView(pl, origin, angles, fov)
 		
 	end
 	
-	// Set view variables to given function arguements.
+	-- Set view variables to given function arguements.
  	view.origin = origin 
  	view.angles	= angles 
  	view.fov 	= fov 
  	
- 	// If the player is a Prop, we know they won't have a weapon so just set their view to third person.
+ 	-- If the player is a Prop, we know they won't have a weapon so just set their view to third person.
 	if pl:Team() == TEAM_PROPS && pl:Alive() then
 	
 		view.origin = origin + Vector(0, 0, hull_z - 60) + (angles:Forward() * -80)
 		
 	else
 	
-		// Give the active weapon a go at changing the viewmodel position.
+		-- Give the active weapon a go at changing the viewmodel position.
 	 	local wep = pl:GetActiveWeapon() 
 		
 	 	if wep && wep != NULL then 
 		
-			// Try ViewModelPosition first.
+			-- Try ViewModelPosition first.
 	 		local func = wep.GetViewModelPosition 
 			
 	 		if func then 
@@ -53,7 +53,7 @@ function GM:CalcView(pl, origin, angles, fov)
 
 	 		end
 	 		 
-			// But let the weapon's CalcView override.
+			-- But let the weapon's CalcView override.
 	 		local func = wep.CalcView 
 			
 	 		if func then 
@@ -71,20 +71,20 @@ function GM:CalcView(pl, origin, angles, fov)
 end
 
 
-// Draw round timeleft and hunter release timeleft.
+-- Draw round timeleft and hunter release timeleft.
 function HUDPaint()
 
-	// If we aren't in a round, don't paint anything.
+	-- If we aren't in a round, don't paint anything.
 	if !GetGlobalBool("InRound") then 
 		
 		return 
 	
 	end
 	
-	// Caculate the time left for blindlock.
+	-- Caculate the time left for blindlock.
 	local blindlock_time_left = (HUNTER_BLINDLOCK_TIME - (CurTime() - GetGlobalFloat("RoundStartTime", 0))) + 1
 	
-	// Decide what text to display on the hud based on the time left.
+	-- Decide what text to display on the hud based on the time left.
 	if blindlock_time_left < 1 && blindlock_time_left > -6 then
 	
 		blindlock_time_left_msg = "Hunters have been released!"
@@ -99,7 +99,7 @@ function HUDPaint()
 		
 	end
 	
-	// If there is text to display, display it.
+	-- If there is text to display, display it.
 	if blindlock_time_left_msg then
 	
 		surface.SetFont("ph_arial")
@@ -114,17 +114,23 @@ end
 hook.Add("HUDPaint", "PH_HUDPaint", HUDPaint)
 
 
-// Called immediately after starting the gamemode.
+-- Called immediately after starting the gamemode.
 function Initialize()
 
 	hull_z = 80
-	surface.CreateFont("Arial", 14, 1200, true, false, "ph_arial")
+	surface.CreateFont("ph_arial", { 
+		font = "Arial",
+		size = 14, 
+		weight = 1200, 
+		antialias = true,
+		shadow = false
+	})
 	
 end
 hook.Add("Initialize", "PH_Initialize", Initialize)
 
 
-// Resets the player hull.
+-- Resets the player hull.
 function ResetHull(um)
 
 	if LocalPlayer() && LocalPlayer():IsValid() then
@@ -138,7 +144,7 @@ end
 usermessage.Hook("ResetHull", ResetHull)
 
 
-// Sets the local blind variable to be used in CalcView.
+-- Sets the local blind variable to be used in CalcView.
 function SetBlind(um)
 
 	blind = um:ReadBool()
@@ -147,7 +153,7 @@ end
 usermessage.Hook("SetBlind", SetBlind)
 
 
-// Sets the player hull and the health status.
+-- Sets the player hull and the health status.
 function SetHull(um)
 
 	hull_xy 	= um:ReadLong()
