@@ -7,7 +7,7 @@
  
 
 -- Include the needed files.
-include("sh_init.lua")
+include("shared.lua")
 
 
 -- Decides where the player view should be.

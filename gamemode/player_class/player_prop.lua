@@ -4,8 +4,8 @@
 -- 
 -- This file contains functions specifically for players who spawn as a Prop.
 --
- 
- 
+
+
 DEFINE_BASECLASS("player_default")
  
 
@@ -31,7 +31,7 @@ end
 
 
 -- Called when player spawns.
-function PLAYER:OnSpawn()
+function PLAYER:Spawn()
 
 	-- Make sure player model doesn't show up to anyone else.
 	self.Player:SetColor(255, 255, 255, 0)
@@ -48,7 +48,7 @@ end
 
 
 -- Called when a player dies.
-function PLAYER:OnDeath(attacker, dmginfo)
+function PLAYER:Death(attacker, dmginfo)
 
 	self.Player:RemoveProp()
 	

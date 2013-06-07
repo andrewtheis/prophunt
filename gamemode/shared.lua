@@ -7,8 +7,8 @@
 
 
 -- Include the required lua files.
-include("sh_config.lua")
-include("sh_player.lua")
+include("config.lua")
+include("player.lua")
 
 
 -- Include the configuration for this map.

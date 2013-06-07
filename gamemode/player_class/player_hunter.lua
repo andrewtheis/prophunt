@@ -44,7 +44,7 @@ end
 
 
 -- Called when player spawns.
-function PLAYER:OnSpawn()
+function PLAYER:Spawn()
 
 	local unlock_time = math.Clamp(PLAYER_BLINDLOCK_TIME - (CurTime() - GetGlobalFloat("RoundStartTime", 0)), 0, PLAYER_BLINDLOCK_TIME)
 	
@@ -62,7 +62,7 @@ end
 
 
 -- Called when a player dies.
-function PLAYER:OnDeath(attacker, dmginfo)
+function PLAYER:Death(attacker, dmginfo)
 
 	self.Player:CreateRagdoll()
 	self.Player:UnLock()
