@@ -11,8 +11,6 @@ AddCSLuaFile("cl_init.lua")
 AddCSLuaFile("config.lua")
 AddCSLuaFile("shared.lua")
 AddCSLuaFile("player.lua")
-AddCSLuaFile("player_class/player_hunter.lua");
-AddCSLuaFile("player_class/player_prop.lua");
 
 
 -- If there is a mapfile send it to the client (sometimes servers want to change settings for certain maps).
@@ -25,6 +23,10 @@ end
 
 -- Include the required lua files.
 include("shared.lua")
+
+
+-- Make base class available
+DEFINE_BASECLASS("gamemode_base")
 
 
 -- Server only constants.

@@ -6,6 +6,9 @@
 --
 
 
+AddCSLuaFile()
+
+
 DEFINE_BASECLASS("player_default")
  
 
@@ -22,16 +25,16 @@ PLAYER.DuckSpeed			= 0.2
 PLAYER.DrawTeamRing			= false
 
 
--- Called after OnSpawn. Sets the player loadout.
+-- Called after OnSpawn. Sets the player loadout. Props do not get anything.
 function PLAYER:Loadout()
 
-	-- Props do not get anything.
-	
 end
 
 
 -- Called when player spawns.
 function PLAYER:Spawn()
+	
+	BaseClass.Spawn(self)
 
 	-- Make sure player model doesn't show up to anyone else.
 	self.Player:SetColor(255, 255, 255, 0)
@@ -44,6 +47,7 @@ function PLAYER:Spawn()
 	
 	-- Set initial max health.
 	self.Player.ph_prop.max_health = 100
+	
 end
 
 
