@@ -9,7 +9,7 @@ If you wish to install manually, you can clone this repository using Git. This w
 
 # Creating a Server
 
-From the Garry's Mod game simply select the gamemode from the dropdown in the bottom right after you have installed. From there, create a server as you normally would.
+After you have installed, launch Garry's Mod and select the Prop Hunt gamemode from the dropdown in the bottom right. From there, create a server as you normally would.
 
 
 # Running a Dedicated Server
