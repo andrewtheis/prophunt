@@ -63,12 +63,6 @@ GM.TeamBased 				= true
 
 -- Called on gamemdoe initialization to create teams.
 function GM:CreateTeams()
-
-	if !GAMEMODE.TeamBased then
-	
-		return
-		
-	end
 	
 	TEAM_HUNTERS = 1
 	team.SetUp(TEAM_HUNTERS, "Hunters", Color(150, 205, 255, 255))

@@ -29,8 +29,6 @@ PLAYER.DrawTeamRing			= false
 -- Called after OnSpawn. Sets the player loadout.
 function PLAYER:Loadout()
 
-	BaseClass.Spawn(self)
-
 	self.Player:GiveAmmo(64, "Buckshot")
 	self.Player:GiveAmmo(255, "SMG1")
 	

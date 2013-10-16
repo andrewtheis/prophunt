@@ -35,7 +35,7 @@ end
 -- Called when player spawns.
 function PLAYER:Spawn()
 	
-	BaseClass.Spawn(self)
+	self.BaseClass.Spawn(self)
 
 	-- Make sure player model doesn't show up to anyone else.
 	self.Player:SetColor(255, 255, 255, 0)

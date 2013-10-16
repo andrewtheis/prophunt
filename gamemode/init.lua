@@ -23,6 +23,8 @@ end
 
 
 -- Include the required lua files.
+include("utility.lua")
+include("round_controller.lua")
 include("shared.lua")
 
 
@@ -57,38 +59,8 @@ for _, taunt in pairs(PROP_TAUNTS) do
 end
 
 
--- Called when a player dies. Checks to see if the round should end.
-function GM:CheckPlayerDeathRoundEnd()
-
-	if !GAMEMODE.RoundBased || !GAMEMODE:InRound() then 
-	
-		return
-		
-	end
-
-	local teams = GAMEMODE:GetTeamAliveCounts()
-
-	if table.Count(teams) == 0 then
-	
-		GAMEMODE:RoundEndWithResult(1001, "Draw, everyone loses!")
-		
-		return
-		
-	end
-
-	if table.Count(teams) == 1 then
-	
-		local team_id = table.GetFirstKey(teams)
-		GAMEMODE:RoundEndWithResult(team_id, team.GetName(team_id).." win!")
-		
-		return
-		
-	end
-end
-
-
 -- Called when an entity takes damage.
-function EntityTakeDamage(ent, inflictor, attacker, amount)
+function GM:EntityTakeDamage(ent, info)
 
 	if GAMEMODE:InRound() && ent && ent:GetClass() != "ph_prop" && !ent:IsPlayer() && attacker && attacker:IsPlayer() && attacker:Team() == TEAM_HUNTERS && attacker:Alive() then
 	
@@ -104,44 +76,31 @@ function EntityTakeDamage(ent, inflictor, attacker, amount)
 	end
 	
 end
-hook.Add("EntityTakeDamage", "PropHunt_EntityTakeDamage", EntityTakeDamage)
 
 
--- Called before start of round.
-function GM:OnPreRoundStart(num)
-
-	game.CleanUpMap()
+-- Called when gamemode loads and starts.
+function GM:Initialize()
 	
-	-- Swap teams only if this isn't the first round and the setting is enabled.
-	if GetGlobalInt("RoundNumber") != 1 && SWAP_TEAMS_EVERY_ROUND == 1 && (team.GetScore(TEAM_PROPS) + team.GetScore(TEAM_HUNTERS)) > 0 then
+	timer.Simple( 3, function() GAMEMODE:StartRoundBasedGame() end )
+	game.ConsoleCommand("mp_flashlight 0\n")
 	
-		for _, pl in pairs(player.GetAll()) do
-		
-			if pl:Team() == TEAM_PROPS || pl:Team() == TEAM_HUNTERS then
-			
-				if pl:Team() == TEAM_PROPS then
-				
-					pl:SetTeam(TEAM_HUNTERS)
-					
-				else
-				
-					pl:SetTeam(TEAM_PROPS)
-					
-				end
-				
-				-- Let everyone know.
-				pl:ChatPrint("Teams have been swapped!")
-				
-			end
-			
-		end
+end
+
+
+-- Called after all entities have been spawned.
+function GM:InitPostEntity()
+	
+	for _, wep in pairs(ents.FindByClass("weapon_*")) do
+	
+		wep:Remove()
 		
 	end
 	
-	-- Reset players.
-	UTIL_StripAllPlayers()
-	UTIL_SpawnAllPlayers()
-	UTIL_FreezeAllPlayers()
+	for _, item in pairs(ents.FindByClass("item_*")) do
+	
+		item:Remove()
+		
+	end
 	
 end
 
@@ -156,6 +115,15 @@ function GM:PlayerCanPickupWeapon(pl, ent)
 	end
 	
 	return true
+	
+end
+
+
+-- Called when a player disconnects.
+function GM:PlayerDisconnected(pl)
+	
+	pl:RemoveProp()
+	self.BaseClass:PlayerDisconnected(pl)
 	
 end
 
@@ -175,6 +143,25 @@ function GM:PlayerSetModel(pl)
 	pl:SetModel(player_model)
 	
 end
+
+
+-- Called when the players spawns.
+function GM:PlayerSpawn(pl)
+	
+	self.BaseClass:PlayerSpawn(pl)
+
+	pl:Blind(false)
+	pl:RemoveProp()
+	pl:SetColor(255, 255, 255, 255)
+	pl:UnLock()
+	pl:ResetHull()
+	pl.last_taunt_time = 0
+	
+	umsg.Start("ResetHull", pl)
+	umsg.End()
+	
+end
+
 
 
 -- Called when a player tries to use an object.
@@ -250,21 +237,6 @@ function GM:PlayerUse(pl, ent)
 end
 
 
--- This is called when the round time ends (props win).
-function GM:RoundTimerEnd()
-
-	if !GAMEMODE:InRound() then
-	
-		return
-		
-	end
-	
-	-- If the timer reached zero, then we know the Props team won beacause they didn't all die.
-	GAMEMODE:RoundEndWithResult(TEAM_PROPS, "Props win!")
-	
-end
-
-
 -- Called when player presses [F3]. Plays a taunt for their team.
 function GM:ShowSpare1(pl)
 
@@ -295,76 +267,8 @@ function GM:ShowSpare1(pl)
 end
 
 
--- Called when the gamemode is initialized.
-function Initialize()
-
-	game.ConsoleCommand("mp_flashlight 0\n")
-	
-end
-hook.Add("Initialize", "PropHunt_Initialize", Initialize)
-
-
--- Called when a player leaves.
-function PlayerDisconnected(pl)
-
-	pl:RemoveProp()
-	
-end
-hook.Add("PlayerDisconnected", "PropHunt_PlayerDisconnected", PlayerDisconnected)
-
-
--- Called when the players spawns.
-function PlayerSpawn(pl)
-
-	pl:Blind(false)
-	pl:RemoveProp()
-	pl:SetColor(255, 255, 255, 255)
-	pl:UnLock()
-	pl:ResetHull()
-	pl.last_taunt_time = 0
-	
-	umsg.Start("ResetHull", pl)
-	umsg.End()
-	
-end
-hook.Add("PlayerSpawn", "PropHunt_PlayerSpawn", PlayerSpawn)
-
-
--- Removes all weapons on a map.
-function RemoveWeaponsAndItems()
-
-	for _, wep in pairs(ents.FindByClass("weapon_*")) do
-	
-		wep:Remove()
-		
-	end
-	
-	for _, item in pairs(ents.FindByClass("item_*")) do
-	
-		item:Remove()
-		
-	end
-	
-end
-hook.Add("InitPostEntity", "PropHunt_RemoveWeaponsAndItems", RemoveWeaponsAndItems)
-
-
--- Called when round ends.
-function RoundEnd()
-
-	for _, pl in pairs(team.GetPlayers(TEAM_HUNTERS)) do
-	
-		pl:Blind(false)
-		pl:UnLock()
-		
-	end
-	
-end
-hook.Add("RoundEnd", "PropHunt_RoundEnd", RoundEnd)
-
-
 -- Called every server tick.
-function Think()
+function GM:Think()
 
 	-- Calculate the location of every Prop's prop entity.
 	for _, pl in pairs(team.GetPlayers(TEAM_PROPS)) do
@@ -380,4 +284,3 @@ function Think()
 	end
 		
 end
-hook.Add("Think", "PropHunt_Think", Think)
