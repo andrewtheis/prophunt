@@ -17,7 +17,8 @@ From the Garry's Mod game simply select the gamemode from the dropdown in the bo
 
 # Credits
 
-Originally developed for Counter-Strike: Source by *Unknown! (Know who? Let us know in the [issues page](https://github.com/andrewtheis/prophunt/issues))*
-Ported to Garry's Mod by Andrew Theis ([A-MT](http://steamcommunity.com/id/amt))
-Updated to work with Garry's Mod 13 by Leleudk & A-MT.
-Maintained on Steam Workshop by [Kow@lski](http://steamcommunity.com/id/kowalski7cc)
+- Originally developed for Counter-Strike: Source by *Unknown*
+	- Know who? Let us know on [this reported issue](https://github.com/andrewtheis/prophunt/issues/2)
+- Cloned to Garry's Mod by Andrew Theis ([A-MT](http://steamcommunity.com/id/amt))
+- Updated to work with Garry's Mod 13 by Leleudk & A-MT.
+- Maintained on Steam Workshop by [Kow@lski](http://steamcommunity.com/id/kowalski7cc)
