@@ -1,8 +1,9 @@
 --
--- Updated by Andrew Theis on 2013-03-09.
+-- init.lua
+-- Prop Hunt
+--	
+-- Created by Andrew Theis on 2013-03-09.
 -- Copyright (c) 2010-2013 Andrew Theis. All rights reserved.
--- 
--- First gamemode file that is called by server. Sends required client files, etc.
 --
 
  

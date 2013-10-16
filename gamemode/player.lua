@@ -1,8 +1,9 @@
 --
--- Updated by Andrew Theis on 2013-03-09.
+-- player.lua
+-- Prop Hunt
+--	
+-- Created by Andrew Theis on 2013-03-09.
 -- Copyright (c) 2010-2013 Andrew Theis. All rights reserved.
--- 
--- Adds functions to the player meta table so they can be called from a player object. For example ply:MyNewFunction().
 --
 
 

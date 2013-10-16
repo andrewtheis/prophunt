@@ -1,8 +1,9 @@
 --
--- Updated by Andrew Theis on 2013-03-09.
+-- shared.lua
+-- Prop Hunt
+--
+-- Created by Andrew Theis on 2013-03-09.
 -- Copyright (c) 2010-2013 Andrew Theis. All rights reserved.
--- 
--- This file contains all settings and functions that are shared between the client and server.
 --
 
 
