@@ -42,7 +42,7 @@ As a Hunter you will be blindfolded for the first ]]..HUNTER_BLINDLOCK_TIME..[[ 
 Both teams can press [F3] to play a taunt sound.]]
 
 
--- Fretta configuration.
+-- Gamemode configuration.
 GM.AutomaticTeamBalance		= true
 GM.AddFragsToTeamScore		= true
 GM.CanOnlySpectateOwnTeam 	= true
@@ -59,6 +59,8 @@ GM.RoundPreStartTime		= 0
 GM.SelectModel				= false
 GM.SuicideString			= "couldn't take the pressure and committed suicide."
 GM.TeamBased 				= true
+GM.HudSkin 					= "PropHuntSkin" -- The Derma skin to use for the HUD components
+GM.RoundPostLength 			= 8	-- Seconds to show the 'x team won!' screen at the end of a round
 
 
 -- Called on gamemdoe initialization to create teams.
@@ -74,4 +76,24 @@ function GM:CreateTeams()
 	team.SetSpawnPoint(TEAM_PROPS, {"info_player_terrorist", "info_player_rebel", "info_player_deathmatch", "info_player_allies"})
 	team.SetClass(TEAM_PROPS, {"Prop"})
 	
+end
+
+
+-- Returns the time limit
+function GM:GetTimeLimit()
+
+	if (GAMEMODE.GameLength > 0) then
+		return GAMEMODE.GameLength * 60;
+	end
+	
+	return -1;
+	
+end
+
+
+function util.ToMinutesSeconds(seconds)
+	local minutes = math.floor(seconds / 60)
+	seconds = seconds - minutes * 60
+
+    return string.format("%02d:%02d", minutes, math.floor(seconds))
 end

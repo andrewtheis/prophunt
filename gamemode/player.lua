@@ -11,11 +11,7 @@
 local meta = FindMetaTable("Player")
 
 -- If there is none, then stop executing this file.
-if !meta then
-	
-	return 
-
-end
+if !meta then return end
 
 
 -- Blinds the player by setting view out into the void.
@@ -41,6 +37,12 @@ function meta:Blind(bool)
 		
 	end
 	
+end
+
+
+-- Returns whether or not the player is a spectator
+function meta:IsObserver()
+	return ( self:GetObserverMode() > OBS_MODE_NONE );
 end
 
 

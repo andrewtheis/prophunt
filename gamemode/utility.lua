@@ -11,7 +11,7 @@
 function UTIL_SpawnAllPlayers()
 
 	for k,v in pairs( player.GetAll() ) do
-		if ( v:CanRespawn() && v:Team() != TEAM_SPECTATOR && v:Team() != TEAM_CONNECTING ) then
+		if ( v:Team() != TEAM_SPECTATOR && v:Team() != TEAM_CONNECTING ) then
 			v:Spawn()
 		end
 	end

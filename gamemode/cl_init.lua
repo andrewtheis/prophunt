@@ -6,9 +6,34 @@
 -- Copyright (c) 2010-2013 Andrew Theis. All rights reserved.
 --
  
+ 
+-- Creating font
+function surface.CreateLegacyFont(font, size, weight, antialias, additive, name, shadow, outline, blursize)
+	surface.CreateFont(name, {font = font, size = size, weight = weight, antialias = antialias, additive = additive, shadow = shadow, outline = outline, blursize = blursize})
+end
+ 
 
 -- Include the needed files.
 include("shared.lua")
+include("cl_splashscreen.lua")
+include("cl_skin.lua")
+include("vgui/vgui_hudlayout.lua")
+include("vgui/vgui_hudelement.lua")
+include("vgui/vgui_hudbase.lua")
+include("vgui/vgui_hudcommon.lua")
+include("cl_hud.lua")
+include("cl_scoreboard.lua")
+
+
+-- Fonts!
+surface.CreateLegacyFont( "Trebuchet MS", 69, 700, true, false, "FRETTA_HUGE" )
+surface.CreateLegacyFont( "Trebuchet MS", 69, 700, true, false, "FRETTA_HUGE_SHADOW", true )
+surface.CreateLegacyFont( "Trebuchet MS", 40, 700, true, false, "FRETTA_LARGE" )
+surface.CreateLegacyFont( "Trebuchet MS", 40, 700, true, false, "FRETTA_LARGE_SHADOW", true )
+surface.CreateLegacyFont( "Trebuchet MS", 19, 700, true, false, "FRETTA_MEDIUM" )
+surface.CreateLegacyFont( "Trebuchet MS", 19, 700, true, false, "FRETTA_MEDIUM_SHADOW", true )
+surface.CreateLegacyFont( "Trebuchet MS", 16, 700, true, false, "FRETTA_SMALL" )
+surface.CreateLegacyFont( "Trebuchet MS", ScreenScale( 10 ), 700, true, false, "FRETTA_NOTIFY", true )
 
 
 -- Decides where the player view should be.
@@ -71,6 +96,13 @@ function GM:CalcView(pl, origin, angles, fov)
 	
 end
 
+
+function GM:InitPostEntity()
+	
+	self.BaseClass:InitPostEntity();
+	GAMEMODE:ShowSplash();
+
+end
 
 -- Draw round timeleft and hunter release timeleft.
 function HUDPaint()

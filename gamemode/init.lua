@@ -8,7 +8,18 @@
 
  
 -- Send the required lua files to the client.
+AddCSLuaFile("vgui/vgui_hudbase.lua")
+AddCSLuaFile("vgui/vgui_hudcommon.lua")
+AddCSLuaFile("vgui/vgui_hudelement.lua")
+AddCSLuaFile("vgui/vgui_hudlayout.lua")
+AddCSLuaFile("vgui/vgui_scoreboard.lua")
+AddCSLuaFile("vgui/vgui_scoreboard_team.lua")
+AddCSLuaFile("vgui/vgui_scoreboard_small.lua")
+AddCSLuaFile("cl_skin.lua")
+AddCSLuaFile("cl_hud.lua")
 AddCSLuaFile("cl_init.lua")
+AddCSLuaFile("cl_scoreboard.lua")
+AddCSLuaFile("cl_splashscreen.lua")
 AddCSLuaFile("config.lua")
 AddCSLuaFile("shared.lua")
 AddCSLuaFile("player.lua")
@@ -26,6 +37,7 @@ end
 include("utility.lua")
 include("round_controller.lua")
 include("shared.lua")
+include("spectator.lua")
 
 
 -- Make base class available
@@ -145,11 +157,18 @@ function GM:PlayerSetModel(pl)
 end
 
 
--- Called when the players spawns.
+-- Called when a player spawns.
 function GM:PlayerSpawn(pl)
 	
 	self.BaseClass:PlayerSpawn(pl)
-
+	
+	-- Set the player class based on team
+	if pl:Team() == TEAM_HUNTERS then
+		player_manager.SetPlayerClass( pl, "player_hunter" )
+	elseif pl:Team() == TEAM_PROPS
+		player_manager.SetPlayerClass( pl, "player_prop" )
+	end
+	
 	pl:Blind(false)
 	pl:RemoveProp()
 	pl:SetColor(255, 255, 255, 255)
@@ -284,3 +303,17 @@ function GM:Think()
 	end
 		
 end
+
+
+local function SeenSplash( ply )
+
+	if ( ply.m_bSeenSplashScreen ) then return end
+	ply.m_bSeenSplashScreen = true
+	
+	if ( !GAMEMODE.TeamBased && !GAMEMODE.NoAutomaticSpawning ) then
+		ply:KillSilent()
+	end
+	
+end
+
+concommand.Add( "seensplash", SeenSplash )

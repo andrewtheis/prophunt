@@ -61,4 +61,4 @@ end
 
 
 -- Register our array of settings and functions as a new class.
-player_manager.RegisterClass("Prop", PLAYER, "player_default")
+player_manager.RegisterClass("player_prop", PLAYER, "player_default")
