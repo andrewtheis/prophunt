@@ -157,15 +157,14 @@ function GM:PlayerSetModel(pl)
 end
 
 
+
 -- Called when a player spawns.
-function GM:PlayerSpawn(pl)
-	
-	self.BaseClass:PlayerSpawn(pl)
+function PlayerSpawn(pl)
 	
 	-- Set the player class based on team
 	if pl:Team() == TEAM_HUNTERS then
 		player_manager.SetPlayerClass( pl, "player_hunter" )
-	elseif pl:Team() == TEAM_PROPS
+	elseif pl:Team() == TEAM_PROPS then
 		player_manager.SetPlayerClass( pl, "player_prop" )
 	end
 	
@@ -180,7 +179,7 @@ function GM:PlayerSpawn(pl)
 	umsg.End()
 	
 end
-
+hook.Add("PlayerSpawn", "PH_PlayerSpawn", PlayerSpawn)
 
 
 -- Called when a player tries to use an object.
