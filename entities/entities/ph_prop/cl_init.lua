@@ -1,16 +1,17 @@
-/*
- * Updated by Andrew Theis on 5/16/2010.
- * Copyright 2010 Andrew Theis. All rights reserved.
- * 
- * Client file for ph_prop entity.
- */
+--
+-- ph_prop/cl_init.lua
+-- Prop Hunt
+--	
+-- Created by Andrew Theis on 2013-03-09.
+-- Copyright (c) 2010-2013 Andrew Theis. All rights reserved.
+--
 
 
-// Include needed files.
+-- Include needed files.
 include("shared.lua")
 
 
-// Draw the model.
+-- Draw the model.
 function ENT:Draw()
 
 	self.Entity:DrawModel()

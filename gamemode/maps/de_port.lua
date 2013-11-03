@@ -1,9 +1,10 @@
-/*
- * Updated by Andrew Theis on 5/16/2010.
- * Copyright 2010 Andrew Theis. All rights reserved.
- * 
- * Props underwater should die on this level.
- */
+--
+-- de_port.lua
+-- Prop Hunt
+--	
+-- Created by Andrew Theis on 2013-03-09.
+-- Copyright (c) 2010-2013 Andrew Theis. All rights reserved.
+--
 
 
 if SERVER then
