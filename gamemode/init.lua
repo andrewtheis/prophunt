@@ -191,53 +191,59 @@ function GM:PlayerUse(pl, ent)
 		return false
 		
 	end
-	
-	-- If player is a Prop, set their prop entity to whatever they are looking at.
-	if pl:Team() == TEAM_PROPS && pl:IsOnGround() && !pl:Crouching() && table.HasValue(USABLE_PROP_ENTITIES, ent:GetClass()) && ent:GetModel() then
-	
-		-- Make sure the prop hasn't been banned by the server.
-		if table.HasValue(BANNED_PROP_MODELS, ent:GetModel()) then
-		
-			pl:ChatPrint("That prop has been banned by the server.")
-			
-			return false
-			
-		end
 
-		-- Check for valid entity.
-		if ent:GetPhysicsObject():IsValid() && pl.ph_prop:GetModel() != ent:GetModel() then
+	--	Props should never be able to pickup or use stuff
+	if pl:Team() == TEAM_PROPS then
+	
+		-- If player is a Prop, set their prop entity to whatever they are looking at.
+		if pl:IsOnGround() && !pl:Crouching() && table.HasValue(USABLE_PROP_ENTITIES, ent:GetClass()) && ent:GetModel() then
+	
+			-- Make sure the prop hasn't been banned by the server.
+			if table.HasValue(BANNED_PROP_MODELS, ent:GetModel()) then
 		
-			-- Calculate tne entity's max health based on size. Then calculate the players's new health based on existing health percentage.
-			local ent_health = math.Clamp(ent:GetPhysicsObject():GetVolume() / 250, 1, 200)
-			local new_health = math.Clamp((pl.ph_prop.health / pl.ph_prop.max_health) * ent_health, 1, 200)
+				pl:ChatPrint("That prop has been banned by the server.")
+				return false
 			
-			-- Set prop entity health and max health.
-			pl.ph_prop.health 		= new_health
-			pl.ph_prop.max_health 	= ent_health
+			end
+
+			-- Check for valid entity.
+			if ent:GetPhysicsObject():IsValid() && pl.ph_prop:GetModel() != ent:GetModel() then
+		
+				-- Calculate tne entity's max health based on size. Then calculate the players's new health based on existing health percentage.
+				local ent_health = math.Clamp(ent:GetPhysicsObject():GetVolume() / 250, 1, 200)
+				local new_health = math.Clamp((pl.ph_prop.health / pl.ph_prop.max_health) * ent_health, 1, 200)
 			
-			-- Setup new model/texture/new collision bounds.
-			pl.ph_prop:SetModel(ent:GetModel())
-			pl.ph_prop:SetSkin(ent:GetSkin())
-			pl.ph_prop:SetSolid(SOLID_BSP)
+				-- Set prop entity health and max health.
+				pl.ph_prop.health 		= new_health
+				pl.ph_prop.max_health 	= ent_health
 			
-			-- Calculate new player hull based on prop size.
-			local hull_xy_max 	= math.Round(math.Max(ent:OBBMaxs().x, ent:OBBMaxs().y))
-			local hull_xy_min 	= hull_xy_max * -1
-			local hull_z 		= math.Round(ent:OBBMaxs().z)
+				-- Setup new model/texture/new collision bounds.
+				pl.ph_prop:SetModel(ent:GetModel())
+				pl.ph_prop:SetSkin(ent:GetSkin())
+				pl.ph_prop:SetSolid(SOLID_BSP)
 			
-			-- Set player hull server side.
-			pl:SetHull(Vector(hull_xy_min, hull_xy_min, 0), Vector(hull_xy_max, hull_xy_max, hull_z))
-			pl:SetHullDuck(Vector(hull_xy_min, hull_xy_min, 0), Vector(hull_xy_max, hull_xy_max, hull_z))
-			pl:SetHealth(new_health)
+				-- Calculate new player hull based on prop size.
+				local hull_xy_max 	= math.Round(math.Max(ent:OBBMaxs().x, ent:OBBMaxs().y))
+				local hull_xy_min 	= hull_xy_max * -1
+				local hull_z 		= math.Round(ent:OBBMaxs().z)
 			
-			-- Set the player hull client side so movement predictions work correctly.
-			umsg.Start("SetHull", pl)
-				umsg.Long(hull_xy_max)
-				umsg.Long(hull_z)
-				umsg.Short(new_health)
-			umsg.End()
+				-- Set player hull server side.
+				pl:SetHull(Vector(hull_xy_min, hull_xy_min, 0), Vector(hull_xy_max, hull_xy_max, hull_z))
+				pl:SetHullDuck(Vector(hull_xy_min, hull_xy_min, 0), Vector(hull_xy_max, hull_xy_max, hull_z))
+				pl:SetHealth(new_health)
+			
+				-- Set the player hull client side so movement predictions work correctly.
+				umsg.Start("SetHull", pl)
+					umsg.Long(hull_xy_max)
+					umsg.Long(hull_z)
+					umsg.Short(new_health)
+				umsg.End()
+						
+			end
 			
 		end
+		
+		return false;
 		
 	end
 	
