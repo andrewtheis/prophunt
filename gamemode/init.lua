@@ -72,9 +72,11 @@ end
 
 
 -- Called when an entity takes damage.
-function GM:EntityTakeDamage(ent, info)
+function GM:EntityTakeDamage(target, dmg_info)
 
-	if GAMEMODE:InRound() && ent && ent:GetClass() != "ph_prop" && !ent:IsPlayer() && attacker && attacker:IsPlayer() && attacker:Team() == TEAM_HUNTERS && attacker:Alive() then
+	attacker = dmg_info:GetAttacker()
+
+	if GAMEMODE:InRound() && target && target:GetClass() != "ph_prop" && !target:IsPlayer() && attacker && attacker:IsPlayer() && attacker:Team() == TEAM_HUNTERS && attacker:Alive() then
 	
 		attacker:SetHealth(attacker:Health() - HUNTER_FIRE_PENALTY)
 		
