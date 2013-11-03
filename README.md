@@ -1,10 +1,10 @@
 # Installation
 
-For the majority of users the easiest way to install is by adding the gamemode from [this unofficial Steam Workshop page](http://steamcommunity.com/sharedfiles/filedetails/?id=135509255&searchtext=Prop+Hunt).
+First, download the latest version by clicking the [download zip](https://github.com/andrewtheis/prophunt/archive/master.zip) button to the right. After downloading, extract the contents of the zip to the below directory. Restart Garry's Mod and you're all set!
 
-If you wish to install manually, you can clone this repository using Git. This will allow you to test the latest and greatest code, and - if you fork to your own space on GitHub - contribute back to the project.
+`<Steam Directory>/SteamApps/common/GarrysMod/garrysmod/gamemodes/prophunt`
 
-**You should note this repository is not yet compatible with the latest Garry's Mod. Downloading from the unofficial workshop page listed above is recommended at this time.**
+If you wish to install the latest and greatest version, head over to the develop branch. You can download the zip or clone the repository using Git. This will allow you to test the latest and greatest code, and - if you fork to your own space on GitHub - contribute back to the project.
 
 
 # Creating a Server
