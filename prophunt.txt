@@ -2,7 +2,7 @@
 {
 	"base"			"base"
 	"title" 		"Prop Hunt"
-	"version"		"3.0.0"
+	"version"		"3.0.0 BETA"
 	"maps" 			"^cs_"
 	"menusystem" 	"1"
 }

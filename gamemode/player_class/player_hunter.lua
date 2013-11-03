@@ -50,15 +50,31 @@ end
 -- Called when player spawns.
 function PLAYER:Spawn()
 
-	local unlock_time = math.Clamp(PLAYER_BLINDLOCK_TIME - (CurTime() - GetGlobalFloat("RoundStartTime", 0)), 0, PLAYER_BLINDLOCK_TIME)
+	local oldhands = self.Player:GetHands();
+	
+	if (IsValid(oldhands)) then
+		
+		oldhands:Remove()
+		
+	end
+
+	local hands = ents.Create( "gmod_hands" )
+
+	if (IsValid(hands)) then
+		
+		hands:DoSetup(self.Player)
+		hands:Spawn()
+		
+	end	
+
+	local unlock_time = math.Clamp(HUNTER_BLINDLOCK_TIME - (CurTime() - GetGlobalFloat("RoundStartTime", 0)), 0, HUNTER_BLINDLOCK_TIME)
 	
 	if unlock_time > 2 then
-	
-		self.Player:Blind(true)
-		timer.Simple(unlock_time, self.Player.Blind, pl, false)
 		
-		timer.Simple(2, self.Player.Lock, pl)
-		timer.Simple(unlock_time, self.Player.UnLock, pl)
+		self.Player:Blind(true)
+		timer.Simple(2, function() self.Player:Lock() end)
+		timer.Simple(unlock_time, function() self.Player:Blind(false) end)
+		timer.Simple(unlock_time, function() self.Player:UnLock() end)
 		
 	end
 	
