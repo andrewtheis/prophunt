@@ -71,7 +71,7 @@ function ENT:OnTakeDamage(dmg)
 			
 			-- Add points to the attacker's score and up their health.
 			attacker:AddFrags(1)
-			attacker:SetHealth(math.Clamp(attacker:Health() + HUNTER_KILL_BONUS, 1, 100))
+			attacker:SetHealth(math.Clamp(attacker:Health() + GetConVarNumber("ph_hunter_kill_bonus"), 1, 100))
 			
 		end
 		

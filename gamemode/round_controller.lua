@@ -48,7 +48,7 @@ function GM:OnPreRoundStart(num)
 	game.CleanUpMap()
 	
 	-- Swap teams only if this isn't the first round and the setting is enabled.
-	if GetGlobalInt("RoundNumber") != 1 && SWAP_TEAMS_EVERY_ROUND == 1 && (team.GetScore(TEAM_PROPS) + team.GetScore(TEAM_HUNTERS)) > 0 then
+	if GetGlobalInt("RoundNumber") != 1 && GetConVarNumber("ph_swap_teams_every_round") == 1 && (team.GetScore(TEAM_PROPS) + team.GetScore(TEAM_HUNTERS)) > 0 then
 	
 		for _, pl in pairs(player.GetAll()) do
 		
@@ -147,8 +147,8 @@ end
 function GM:PreRoundStart( iNum )
 
 	-- Should the game end?
-	if( CurTime() >= GAMEMODE.GetTimeLimit() || GAMEMODE:HasReachedRoundLimit( iNum ) ) then
-		GAMEMODE:EndOfGame( true );
+	if (GAMEMODE:HasReachedRoundLimit(iNum)) then
+		GAMEMODE:EndOfGame(true);
 		return;
 	end
 	

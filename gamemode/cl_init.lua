@@ -115,7 +115,7 @@ function HUDPaint()
 	end
 	
 	-- Caculate the time left for blindlock.
-	local blindlock_time_left = (HUNTER_BLINDLOCK_TIME - (CurTime() - GetGlobalFloat("RoundStartTime", 0))) + 1
+	local blindlock_time_left = (GetConVarNumber("ph_hunter_blindlock_time") - (CurTime() - GetGlobalFloat("RoundStartTime", 0))) + 1
 	
 	-- Decide what text to display on the hud based on the time left.
 	if blindlock_time_left < 1 && blindlock_time_left > -6 then

@@ -17,6 +17,18 @@ After you have installed, launch Garry's Mod and select the Prop Hunt gamemode f
 *To be written.*
 
 
+# Console Variables
+
+The variables below allow you to configure various aspects of the gamemode. You can use these commands in Console when running an ad-hoc server, or set them in your dedicated server's config file.
+
+- `ph_hunter_blindlock_time`	The number of seconds that hunters should be blinded/locked at the beginning of a round (Default: 30).
+- `ph_hunter_fire_penalty`		Health points removed from hunters when they shoot (Default: 5).
+- `ph_hunter_kill_bonus`		How much health to give back to the Hunter after killing a prop (Default: 20).
+- `ph_prop_taunt_delay`			Seconds a player has to wait before they can taunt again (Default: 5).
+- `ph_rounds_per_map`			Rounds played on a map (Default: 10).
+- `ph_round_length`				Time (in seconds) for each round (Default: 300).
+- `ph_swap_teams_every_round`	Determains if players should be team swapped every round (0 = No, 1 = Yes; Default: 1).
+
 # Credits
 
 - Originally developed for Counter-Strike: Source by *Unknown*

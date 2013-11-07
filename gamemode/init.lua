@@ -20,7 +20,6 @@ AddCSLuaFile("cl_hud.lua")
 AddCSLuaFile("cl_init.lua")
 AddCSLuaFile("cl_scoreboard.lua")
 AddCSLuaFile("cl_splashscreen.lua")
-AddCSLuaFile("config.lua")
 AddCSLuaFile("shared.lua")
 AddCSLuaFile("player.lua")
 
@@ -34,6 +33,8 @@ end
 
 
 -- Include the required lua files.
+include("config.lua")
+include("convars.lua")
 include("utility.lua")
 include("round_controller.lua")
 include("shared.lua")
@@ -78,7 +79,7 @@ function GM:EntityTakeDamage(target, dmg_info)
 
 	if GAMEMODE:InRound() && target && target:GetClass() != "ph_prop" && !target:IsPlayer() && attacker && attacker:IsPlayer() && attacker:Team() == TEAM_HUNTERS && attacker:Alive() then
 	
-		attacker:SetHealth(attacker:Health() - HUNTER_FIRE_PENALTY)
+		attacker:SetHealth(attacker:Health() - GetConVarNumber("ph_hunter_fire_penalty"))
 		
 		if attacker:Health() <= 0 then
 		
@@ -266,7 +267,7 @@ end
 -- Called when player presses [F3]. Plays a taunt for their team.
 function GM:ShowSpare1(pl)
 
-	if GAMEMODE:InRound() && pl:Alive() && (pl:Team() == TEAM_HUNTERS || pl:Team() == TEAM_PROPS) && pl.last_taunt_time + TAUNT_DELAY <= CurTime() && #PROP_TAUNTS > 1 && #HUNTER_TAUNTS > 1 then
+	if GAMEMODE:InRound() && pl:Alive() && (pl:Team() == TEAM_HUNTERS || pl:Team() == TEAM_PROPS) && pl.last_taunt_time + GetConVarNumber("ph_prop_taunt_delay") <= CurTime() && #PROP_TAUNTS > 1 && #HUNTER_TAUNTS > 1 then
 	
 		-- Select random taunt until it doesn't equal the last taunt.
 		repeat

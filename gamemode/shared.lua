@@ -8,7 +8,6 @@
 
 
 -- Include the required lua files.
-include("config.lua")
 include("player.lua")
 
 
@@ -35,9 +34,9 @@ GM.Website	= "http://www.github.com/andrewtheis/prop-hunt"
 -- Help info.
 GM.Help = [[Prop Hunt is a twist on the classic backyard game Hide and Seek.
 
-As a Prop you have ]]..HUNTER_BLINDLOCK_TIME..[[ seconds to replicate an existing prop on the map and then find a good hiding spot. Press [E] to replicate the prop you are looking at. Your health is scaled based on the size of the prop you replicate.
+As a Prop you have ]]..GetConVarNumber("ph_hunter_blindlock_time")..[[ seconds to replicate an existing prop on the map and then find a good hiding spot. Press [E] to replicate the prop you are looking at. Your health is scaled based on the size of the prop you replicate.
 
-As a Hunter you will be blindfolded for the first ]]..HUNTER_BLINDLOCK_TIME..[[ seconds of the round while the Props hide. When your blindfold is taken off, you will need to find props controlled by players and kill them. Damaging non-player props will lower your health significantly. However, killing a Prop will increase your health by ]]..HUNTER_KILL_BONUS..[[ points.
+As a Hunter you will be blindfolded for the first ]]..GetConVarNumber("ph_hunter_blindlock_time")..[[ seconds of the round while the Props hide. When your blindfold is taken off, you will need to find props controlled by players and kill them. Damaging non-player props will lower your health significantly. However, killing a Prop will increase your health by ]]..GetConVarNumber("ph_hunter_kill_bonus")..[[ points.
 
 Both teams can press [F3] to play a taunt sound.]]
 
@@ -48,13 +47,12 @@ GM.AddFragsToTeamScore		= true
 GM.CanOnlySpectateOwnTeam 	= true
 GM.Data 					= {}
 GM.EnableFreezeCam			= true
-GM.GameLength				= GAME_TIME
 GM.NoAutomaticSpawning		= true
 GM.NoNonPlayerPlayerDamage	= true
 GM.NoPlayerPlayerDamage 	= true
 GM.RoundBased				= true
-GM.RoundLimit				= ROUNDS_PER_MAP
-GM.RoundLength 				= ROUND_TIME
+GM.RoundLimit				= GetConVarNumber("ph_rounds_per_map")
+GM.RoundLength 				= GetConVarNumber("ph_round_length")
 GM.RoundPreStartTime		= 0
 GM.SelectModel				= false
 GM.SuicideString			= "couldn't take the pressure and committed suicide."
@@ -75,18 +73,6 @@ function GM:CreateTeams()
 	team.SetUp(TEAM_PROPS, "Props", Color(255, 60, 60, 255))
 	team.SetSpawnPoint(TEAM_PROPS, {"info_player_terrorist", "info_player_rebel", "info_player_deathmatch", "info_player_allies"})
 	team.SetClass(TEAM_PROPS, {"Prop"})
-	
-end
-
-
--- Returns the time limit
-function GM:GetTimeLimit()
-
-	if (GAMEMODE.GameLength > 0) then
-		return GAMEMODE.GameLength * 60;
-	end
-	
-	return -1;
 	
 end
 

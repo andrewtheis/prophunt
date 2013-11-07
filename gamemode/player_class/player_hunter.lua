@@ -67,7 +67,7 @@ function PLAYER:Spawn()
 		
 	end	
 
-	local unlock_time = math.Clamp(HUNTER_BLINDLOCK_TIME - (CurTime() - GetGlobalFloat("RoundStartTime", 0)), 0, HUNTER_BLINDLOCK_TIME)
+	local unlock_time = math.Clamp(GetConVarNumber("ph_hunter_blindlock_time") - (CurTime() - GetGlobalFloat("RoundStartTime", 0)), 0, GetConVarNumber("ph_hunter_blindlock_time"))
 	
 	if unlock_time > 2 then
 		
