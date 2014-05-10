@@ -241,12 +241,13 @@ function GM:PlayerUse(pl, ent)
 					umsg.Long(hull_z)
 					umsg.Short(new_health)
 				umsg.End()
-						
+					
+					return false -- Putting the return false here ensures the prop can open doors and that they do not pick up the item they change to.	
 			end
 			
 		end
 		
-		return false;
+		
 		
 	end
 	

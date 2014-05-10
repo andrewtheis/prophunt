@@ -4,7 +4,7 @@ First, download the latest version by clicking the [download zip](https://github
 
 `<Steam Directory>/SteamApps/common/GarrysMod/garrysmod/gamemodes/prophunt`
 
-If you wish to install the latest and greatest version, head over to the develop branch. You can download the zip or clone the repository using Git. This will allow you to test the latest and greatest code, and - if you fork to your own space on GitHub - contribute back to the project.
+If you wish to install the latest and greatest version, head over to the develop branch. You can download the zip or clone the repository using Git. This will allow you to play on the bleeding edge, and - if you fork to your own space on GitHub - contribute back to the project.
 
 
 # Creating a Server
