@@ -14,7 +14,8 @@ After you have installed, launch Garry's Mod and select the Prop Hunt gamemode f
 
 # Running a Dedicated Server
 
-*To be written.*
+- [Setup on Windows](https://github.com/andrewtheis/prophunt/blob/master/windows.md)
+- [Setup on Linux](https://github.com/andrewtheis/prophunt/blob/master/linux.md)
 
 
 # Credits
