@@ -16,7 +16,7 @@ quit
 Or with one command. You can also save this as a script for easy updating.
 ```
 cd C:\steamcmd
-steamcmd.exe +login anonymous +force_install_dir /srv/steamcmd/server/gmod +app_update 4020 +quit
+steamcmd.exe +login anonymous +force_install_dir C:\steamcmd\gmod +app_update 4020 +quit
 ```
 
 #Install PropHunt
