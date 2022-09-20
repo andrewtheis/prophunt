@@ -20,7 +20,7 @@ After you have installed, launch Garry's Mod and select the Prop Hunt gamemode f
 
 # Credits
 
-- Originally developed for Counter-Strike: Source by *Unknown*
+- Originally concept made for Counter-Strike: Source by *Unknown*
 	- Know who? Let us know on [this reported issue](https://github.com/andrewtheis/prophunt/issues/2)
 - Cloned to Garry's Mod by Andrew Theis
 - Special thanks to [Leleudk](http://steamcommunity.com/id/leleudk) and [Kow@lski](http://steamcommunity.com/id/kowalski7cc) for maintaining a GMod 13 compatible version in my absence.
